@@ -1,7 +1,6 @@
 import json, time, hmac, hashlib
 from urllib import request, parse
 
-
 class TokensClient:
 
     def __init__(self, api_key, api_secret, url = 'https://api.tokens.net'):
