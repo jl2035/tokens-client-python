@@ -143,3 +143,16 @@ class TokensClient:
         method = '/private/orders/cancel/{}/'.format(order_id)
 
         return self.api_request(method, '')
+
+    def get_trades(self, trading_pair, page):
+        method = '/private/trades/{}/{}/'.format(trading_pair, page)
+
+        return self.api_request(method)
+
+    def get_trades_all(self, page):
+        return self.get_trades('all', page)
+
+    def get_transactions(self, page):
+        method = '/private/transactions/{}'.format(page)
+
+        return self.api_request(method)
