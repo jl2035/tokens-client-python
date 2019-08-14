@@ -51,6 +51,11 @@ class TokensClient:
         return content
 
     # Public API calls
+    def get_currencies(self):
+        method = '/public/currency/all/'
+
+        return self.api_request(method)
+
     def get_trading_pairs(self):
         method = '/public/trading-pairs/get/all/'
 
