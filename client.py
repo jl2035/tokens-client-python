@@ -77,8 +77,8 @@ class TokensClient:
     def get_hourly_ticker_all(self):
         return self.get_hourly_ticker('all')
 
-    def get_order_book(self, trading_pair):
-        method = '/public/order-book/{}/'.format(trading_pair)
+    def get_order_book(self, trading_pair, granular=False):
+        method = '/public/order-book/{}{}/'.format('all/' if granular else '', trading_pair)
 
         return self.api_request(method)
 
@@ -111,14 +111,6 @@ class TokensClient:
 
         return self.api_request(method)
 
-    def cancel_order_all(self, trading_pair=None):
-        open_orders = self.get_open_orders(trading_pair)
-
-        for order in open_orders:
-            self.cancel_order(order['id'])
-
-        return True
-
     def get_open_orders(self, trading_pair=None):
         if trading_pair is None:
             method = '/private/orders/get/all/'
@@ -148,6 +140,18 @@ class TokensClient:
         method = '/private/orders/cancel/{}/'.format(order_id)
 
         return self.api_request(method, '')
+
+    def cancel_order_all(self, trading_pair=None):
+        open_orders = self.get_open_orders(trading_pair).get('openOrders', [])
+        for order in open_orders:
+            self.cancel_order(order['id'])
+
+        return True
+
+    def get_deposit_address(self, currency):
+        method = '/private/deposit/{}/'.format(currency)
+
+        return self.api_request(method)
 
     def get_trades(self, trading_pair, page):
         method = '/private/trades/{}/{}/'.format(trading_pair, page)
