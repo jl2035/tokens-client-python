@@ -165,3 +165,9 @@ class TokensClient:
         method = '/private/transactions/{}'.format(page)
 
         return self.api_request(method)
+
+    def get_candles(self, trading_pair, interval, period, from_unix_timestamp, to_unix_timestamp):
+        method = '/public/price-chart/{}/{}/{}/{}/{}'.format(trading_pair, interval, period, from_unix_timestamp, to_unix_timestamp)
+
+        return self.api_request(method)
+
